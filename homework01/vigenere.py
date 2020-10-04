@@ -10,7 +10,12 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    for i in plaintext:
+        if ord(i)>=0 and ord(i)<=25:
+            a=chr(ord(i))
+            ciphertext += a
+        else:
+            ciphertext += i
     return ciphertext
 
 
@@ -26,5 +31,10 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    for i in ciphertext:
+        if ord(i)>=0 and ord(i)<=25:
+            a=chr(ord(i))
+            plaintext += a
+        else:
+            plaintext += i
     return plaintext
