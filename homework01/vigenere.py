@@ -10,12 +10,25 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    for i in plaintext:
-        if ord(i)>=0 and ord(i)<=25:
-            a=chr(ord(i))
-            ciphertext += a
+    for i, letter in enumerate(plaintext):
+        shift2 = keyword[i % len(keyword)]
+        shift = ord((shift2).lower()) - ord("a")
+        if letter.isalpha() != 0 and shift != 0:
+            chr_i = ord(letter)
+            if 65 <= chr_i <= 90:
+                chr_i = chr_i + shift
+                if chr_i > 90:
+                    chr_i = chr_i - 26
+                letter_i = chr(chr_i)
+                ciphertext += letter_i
+            elif 97 <= chr_i <= 122:
+                chr_i = chr_i + shift
+                if chr_i > 122:
+                    chr_i = chr_i - 26
+                letter_i = chr(chr_i)
+                ciphertext += letter_i
         else:
-            ciphertext += i
+            ciphertext += letter
     return ciphertext
 
 
@@ -31,10 +44,23 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    for i in ciphertext:
-        if ord(i)>=0 and ord(i)<=25:
-            a=chr(ord(i))
-            plaintext += a
+    for i, letter in enumerate(ciphertext):
+        shift2 = keyword[i % len(keyword)]
+        shift = ord((shift2).lower()) - ord("a")
+        if letter.isalpha() != 0 and shift != 0:
+            chr_i = ord(letter)
+            if 65 <= chr_i <= 90:
+                chr_i = chr_i - shift
+                if chr_i < 65:
+                    chr_i = chr_i + 26
+                letter_i = chr(chr_i)
+                plaintext += letter_i
+            elif 97 <= chr_i <= 122:
+                chr_i = chr_i - shift
+                if chr_i < 97:
+                    chr_i = chr_i + 26
+                letter_i = chr(chr_i)
+                plaintext += letter_i
         else:
-            plaintext += i
+            plaintext += letter
     return plaintext
