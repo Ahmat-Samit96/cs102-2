@@ -15,11 +15,11 @@ def is_prime(n: int) -> bool:
     """
     if n <= 1:
         return False
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
+    k = 2
+    while k * k <= n:
+        if n % k == 0:
             return False
-        i += 1
+        k += 1
     return True
 
 def gcd(a: int, b: int) -> int:
@@ -51,17 +51,31 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    def egcd(e, b):
-        if e % b == 0:
-            return b, 0, 1
-        else:
-            if b > e:
-                e, b = b, e
-            g, x, y = egcd(b, e % b)
-            return g, y, x - (e // b) * y
-    g, x, y = egcd(e, phi)
-    return y % phi 
-            
+    if phi > e:
+        e, phi = phi, e
+    a = e
+    b = phi
+    if a % b == 0:
+        return 0
+    else:
+        s1 = [e]
+        s2 = [phi]
+        n = 0
+        while b != 1:
+            n += 1
+            a, b = b, a % b 
+            s1.append(a)
+            s2.append(b)
+        
+        x = a % b
+        y = b
+        while a < 0:
+            a = s1[n - 1]
+            b = s2[n - 1]
+            x, y = y, x - (a // b) * y
+            n = n -1
+        
+        return y % e
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
