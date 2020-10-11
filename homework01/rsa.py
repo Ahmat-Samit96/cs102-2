@@ -51,31 +51,29 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    if phi > e:
-        e, phi = phi, e
     a = e
     b = phi
-    if a % b == 0:
-        return 0
-    else:
-        s1 = [e]
-        s2 = [phi]
-        n = 0
-        while b != 1:
-            n += 1
-            a, b = b, a % b 
-            s1.append(a)
-            s2.append(b)
-        
-        x = a % b
-        y = b
-        while a < 0:
-            a = s1[n - 1]
-            b = s2[n - 1]
-            x, y = y, x - (a // b) * y
-            n = n -1
-        
-        return y % e
+    if b > a:
+        a, b = b, a
+    s1 = [a]
+    s2 = [b]
+    n = 0
+
+    while a % b != 0:
+        n += 1
+        a, b = b, a % b
+        s1.append(a)
+        s2.append(b)
+
+    x = 0
+    y = 1
+    while n > 0:
+        a = s1[n - 1]
+        b = s2[n - 1]
+        x, y = y, x - (a // b) * y
+        n = n -1
+
+    return y % phi
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -124,7 +122,6 @@ def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     plain = [chr((char ** key) % n) for char in ciphertext]
     # Return the array of bytes as a string
     return "".join(plain)
-
 
 if __name__ == "__main__":
     print("RSA Encrypter/ Decrypter")
