@@ -22,6 +22,7 @@ def is_prime(n: int) -> bool:
         k += 1
     return True
 
+
 def gcd(a: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
@@ -31,17 +32,18 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    smaller=min(a,b)
+    smaller = min(a, b)
     k = 1
     if b == 0:
         return a
     elif a == 0:
         return b
     else:
-        for i in range(1, smaller+1):
-            if((a % i == 0) and (b % i == 0)):
-              k = i
+        for i in range(1, smaller + 1):
+            if (a % i == 0) and (b % i == 0):
+                k = i
         return k
+
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
@@ -71,7 +73,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
         a = s1[n - 1]
         b = s2[n - 1]
         x, y = y, x - (a // b) * y
-        n = n -1
+        n = n - 1
 
     return y % phi
 
@@ -122,6 +124,7 @@ def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     plain = [chr((char ** key) % n) for char in ciphertext]
     # Return the array of bytes as a string
     return "".join(plain)
+
 
 if __name__ == "__main__":
     print("RSA Encrypter/ Decrypter")
