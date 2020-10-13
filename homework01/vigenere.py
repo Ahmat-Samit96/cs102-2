@@ -10,11 +10,11 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    k1=ord("a")   #65
-    k2=ord("z")   #90
-    k3=ord("A")   #97
-    k4=ord("Z")   #122
-    k5=26   #Количество букв в английском языке
+    k1 = ord("a")  # 65
+    k2 = ord("z")  # 90
+    k3 = ord("A")  # 97
+    k4 = ord("Z")  # 122
+    k5 = 26  # Количество букв в английском языке
     for i, letter in enumerate(plaintext):
         shift = ord((keyword[i % len(keyword)]).lower()) - k1
         if letter.isalpha() and shift != 0:
@@ -46,11 +46,11 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    k1=ord("a")   #65
-    k2=ord("z")   #90
-    k3=ord("A")   #97
-    k4=ord("Z")   #122
-    k5=26   #Количество букв в английском языке
+    k1 = ord("a")  # 65
+    k2 = ord("z")  # 90
+    k3 = ord("A")  # 97
+    k4 = ord("Z")  # 122
+    k5 = 26  # Количество букв в английском языке
     for i, letter in enumerate(ciphertext):
         shift = ord((keyword[i % len(keyword)]).lower()) - k1
         if letter.isalpha() and shift != 0:
