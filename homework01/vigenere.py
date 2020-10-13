@@ -10,19 +10,24 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
+    k1=ord("a")   #65
+    k2=ord("z")   #90
+    k3=ord("A")   #97
+    k4=ord("Z")   #122
+    k5=26   #Количество букв в английском языке
     for i, letter in enumerate(plaintext):
-        shift = ord((keyword[i % len(keyword)]).lower()) - ord("a")
-        if letter.isalpha() != 0 and shift != 0:
+        shift = ord((keyword[i % len(keyword)]).lower()) - k1
+        if letter.isalpha() and shift != 0:
             chr_i = ord(letter)
-            if 65 <= chr_i <= 90:
+            if k1 <= chr_i <= k2:
                 chr_i = chr_i + shift
-                if chr_i > 90:
-                    chr_i = chr_i - 26
+                if chr_i > k2:
+                    chr_i = chr_i - k5
                 ciphertext += chr(chr_i)
-            elif 97 <= chr_i <= 122:
+            elif k3 <= chr_i <= k4:
                 chr_i = chr_i + shift
-                if chr_i > 122:
-                    chr_i = chr_i - 26
+                if chr_i > k4:
+                    chr_i = chr_i - k5
                 ciphertext += chr(chr_i)
         else:
             ciphertext += letter
@@ -41,19 +46,24 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
+    k1=ord("a")   #65
+    k2=ord("z")   #90
+    k3=ord("A")   #97
+    k4=ord("Z")   #122
+    k5=26   #Количество букв в английском языке
     for i, letter in enumerate(ciphertext):
-        shift = ord((keyword[i % len(keyword)]).lower()) - ord("a")
-        if letter.isalpha() != 0 and shift != 0:
+        shift = ord((keyword[i % len(keyword)]).lower()) - k1
+        if letter.isalpha() and shift != 0:
             chr_i = ord(letter)
-            if 65 <= chr_i <= 90:
+            if k1 <= chr_i <= k2:
                 chr_i = chr_i - shift
-                if chr_i < 65:
-                    chr_i = chr_i + 26
+                if chr_i < k1:
+                    chr_i = chr_i + k5
                 plaintext += chr(chr_i)
-            elif 97 <= chr_i <= 122:
+            elif k3 <= chr_i <= k4:
                 chr_i = chr_i - shift
-                if chr_i < 97:
-                    chr_i = chr_i + 26
+                if chr_i < k3:
+                    chr_i = chr_i + k5
                 plaintext += chr(chr_i)
         else:
             plaintext += letter
