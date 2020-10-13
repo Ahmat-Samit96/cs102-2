@@ -15,22 +15,23 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    k1=ord("a")   #65
-    k2=ord("z")   #90
-    k3=ord("A")   #97
-    k4=ord("Z")   #122
-    k5=26   #Количество букв в английском языке
+    k1 = ord("a")  # 65
+    k2 = ord("z")  # 90
+    k3 = ord("A")  # 97
+    k4 = ord("Z")  # 122
+    k5 = 26  # Количество букв в английском языке
     for i in plaintext:
         if i.isalpha():
-            if k1<=ord(i)<=k2:
-                a=chr((((ord(i)-k1)+shift)%k5)+k1)
+            if k1 <= ord(i) <= k2:
+                a = chr((((ord(i) - k1) + shift) % k5) + k1)
                 ciphertext += a
-            elif k3<=ord(i)<=k4:
-                a=chr((((ord(i)-k3)+shift)%k5)+k3)
+            elif k3 <= ord(i) <= k4:
+                a = chr((((ord(i) - k3) + shift) % k5) + k3)
                 ciphertext += a
         else:
             ciphertext += i
     return ciphertext
+
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
@@ -46,18 +47,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    k1=ord("a")   #65
-    k2=ord("z")   #90
-    k3=ord("A")   #97
-    k4=ord("Z")   #122
-    k5=26   #Количество букв в английском языке
+    k1 = ord("a")  # 65
+    k2 = ord("z")  # 90
+    k3 = ord("A")  # 97
+    k4 = ord("Z")  # 122
+    k5 = 26  # Количество букв в английском языке
     for i in ciphertext:
         if i.isalpha():
-            if k1<=ord(i)<=k2:
-                a=chr((((ord(i)-k1)-shift)%k5)+k1)
+            if k1 <= ord(i) <= k2:
+                a = chr((((ord(i) - k1) - shift) % k5) + k1)
                 plaintext += a
-            elif k3<=ord(i)<=k4:
-                a=chr((((ord(i)-k3)-shift)%k5)+k3)
+            elif k3 <= ord(i) <= k4:
+                a = chr((((ord(i) - k3) - shift) % k5) + k3)
                 plaintext += a
         else:
             plaintext += i
