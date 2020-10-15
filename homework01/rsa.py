@@ -32,17 +32,13 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    smaller = min(a, b)
-    k = 1
-    if b == 0:
-        return a
-    elif a == 0:
-        return b
-    else:
-        for i in range(1, smaller + 1):
-            if (a % i == 0) and (b % i == 0):
-                k = i
-        return k
+    while a != 0 and b != 0:
+        if a > b:
+            a = a % b
+        else:
+            b = b % a
+
+    return (a + b)
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
