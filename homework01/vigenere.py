@@ -10,11 +10,11 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    low_first = ord("a")  
-    low_last = ord("z")  
-    high_first = ord("A")  
-    high_last = ord("Z")  
-    eng_alp = 26  
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    eng_alp = 26
     for i, letter in enumerate(plaintext):
         shift = ord((keyword[i % len(keyword)]).lower()) - low_first
         if letter.isalpha() and shift != 0:
@@ -46,11 +46,11 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    low_first = ord("a")  
-    low_last = ord("z")  
-    high_first = ord("A")  
-    high_last = ord("Z")  
-    eng_alp = 26  
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    eng_alp = 26
     for i, letter in enumerate(ciphertext):
         shift = ord((keyword[i % len(keyword)]).lower()) - low_first
         if letter.isalpha() and shift != 0:
