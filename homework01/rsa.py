@@ -38,7 +38,7 @@ def gcd(a: int, b: int) -> int:
         else:
             b = b % a
 
-    return (a + b)
+    return a + b
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
