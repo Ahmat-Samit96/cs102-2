@@ -10,24 +10,24 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    k1 = ord("a")  # 65
-    k2 = ord("z")  # 90
-    k3 = ord("A")  # 97
-    k4 = ord("Z")  # 122
-    k5 = 26  # Количество букв в английском языке
+    low_first = ord("a")  
+    low_last = ord("z")  
+    high_first = ord("A")  
+    high_last = ord("Z")  
+    eng_alp = 26  
     for i, letter in enumerate(plaintext):
-        shift = ord((keyword[i % len(keyword)]).lower()) - k1
+        shift = ord((keyword[i % len(keyword)]).lower()) - low_first
         if letter.isalpha() and shift != 0:
             chr_i = ord(letter)
-            if k1 <= chr_i <= k2:
+            if low_first <= chr_i <= low_last:
                 chr_i = chr_i + shift
-                if chr_i > k2:
-                    chr_i = chr_i - k5
+                if chr_i > low_last:
+                    chr_i = chr_i - eng_alp
                 ciphertext += chr(chr_i)
-            elif k3 <= chr_i <= k4:
+            elif high_first <= chr_i <= high_last:
                 chr_i = chr_i + shift
-                if chr_i > k4:
-                    chr_i = chr_i - k5
+                if chr_i > high_last:
+                    chr_i = chr_i - eng_alp
                 ciphertext += chr(chr_i)
         else:
             ciphertext += letter
@@ -46,24 +46,24 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    k1 = ord("a")  # 65
-    k2 = ord("z")  # 90
-    k3 = ord("A")  # 97
-    k4 = ord("Z")  # 122
-    k5 = 26  # Количество букв в английском языке
+    low_first = ord("a")  
+    low_last = ord("z")  
+    high_first = ord("A")  
+    high_last = ord("Z")  
+    eng_alp = 26  
     for i, letter in enumerate(ciphertext):
-        shift = ord((keyword[i % len(keyword)]).lower()) - k1
+        shift = ord((keyword[i % len(keyword)]).lower()) - low_first
         if letter.isalpha() and shift != 0:
             chr_i = ord(letter)
-            if k1 <= chr_i <= k2:
+            if low_first <= chr_i <= low_last:
                 chr_i = chr_i - shift
-                if chr_i < k1:
-                    chr_i = chr_i + k5
+                if chr_i < low_first:
+                    chr_i = chr_i + eng_alp
                 plaintext += chr(chr_i)
-            elif k3 <= chr_i <= k4:
+            elif high_first <= chr_i <= high_last:
                 chr_i = chr_i - shift
-                if chr_i < k3:
-                    chr_i = chr_i + k5
+                if chr_i < high_first:
+                    chr_i = chr_i + eng_alp
                 plaintext += chr(chr_i)
         else:
             plaintext += letter
