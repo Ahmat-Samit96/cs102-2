@@ -15,11 +15,11 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    low_first = ord("a")  
-    low_last = ord("z")  
-    high_first = ord("A")  
-    high_last = ord("Z")  
-    Eng_alp = 26  
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    Eng_alp = 26
     for i in plaintext:
         if i.isalpha():
             if low_first <= ord(i) <= low_last:
@@ -47,11 +47,11 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    low_first = ord("a")  
-    low_last = ord("z")  
-    high_first = ord("A") 
-    high_last = ord("Z")  
-    Eng_alp = 26  
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    Eng_alp = 26
     for i in ciphertext:
         if i.isalpha():
             if low_first <= ord(i) <= low_last:
