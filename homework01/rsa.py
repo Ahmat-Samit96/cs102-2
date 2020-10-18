@@ -15,12 +15,13 @@ def is_prime(n: int) -> bool:
     """
     if n <= 1:
         return False
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
+    k = 2
+    while k * k <= n:
+        if n % k == 0:
             return False
-        i += 1
+        k += 1
     return True
+
 
 def gcd(a: int, b: int) -> int:
     """
@@ -31,17 +32,14 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    smaller=min(a,b)
-    k = 1
-    if b == 0:
-        return a
-    elif a == 0:
-        return b
-    else:
-        for i in range(1, smaller+1):
-            if((a % i == 0) and (b % i == 0)):
-              k = i
-        return k
+    while a != 0 and b != 0:
+        if a > b:
+            a = a % b
+        else:
+            b = b % a
+
+    return a + b
+
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
@@ -51,20 +49,34 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    def egcd(e, b):
-        if e % b == 0:
-            return b, 0, 1
-        else:
-            if b > e:
-                e, b = b, e
-            g, x, y = egcd(b, e % b)
-            return g, y, x - (e // b) * y
-    g, x, y = egcd(e, phi)
-    return y % phi 
-            
+    a = e
+    b = phi
+    if b > a:
+        a, b = b, a
+    s1 = [a]
+    s2 = [b]
+    n = 0
+
+    while a % b != 0:
+        n += 1
+        a, b = b, a % b
+        s1.append(a)
+        s2.append(b)
+
+    x = 0
+    y = 1
+    while n > 0:
+        a = s1[n - 1]
+        b = s2[n - 1]
+        x, y = y, x - (a // b) * y
+        n = n - 1
+
+    return y % phi
 
 
-def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
+def generate_keypair(
+    p: int, q: int
+) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
