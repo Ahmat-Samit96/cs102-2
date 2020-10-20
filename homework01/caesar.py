@@ -15,17 +15,23 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    eng_alp = 26
     for i in plaintext:
-        if i.isalpha() != 0:
-            if ord(i)>=65 and ord(i)<=90:
-                a=chr((((ord(i)-65)+shift)%26)+65)
+        if i.isalpha():
+            if low_first <= ord(i) <= low_last:
+                a = chr((((ord(i) - low_first) + shift) % eng_alp) + low_first)
                 ciphertext += a
-            elif ord(i)>=97 and ord(i)<=122:
-                a=chr((((ord(i)-97)+shift)%26)+97)
+            elif high_first <= ord(i) <= high_last:
+                a = chr((((ord(i) - high_first) + shift) % eng_alp) + high_first)
                 ciphertext += a
         else:
             ciphertext += i
     return ciphertext
+
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
@@ -41,13 +47,18 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
+    low_first = ord("a")
+    low_last = ord("z")
+    high_first = ord("A")
+    high_last = ord("Z")
+    eng_alp = 26
     for i in ciphertext:
-        if i.isalpha() != 0:
-            if ord(i)>=65 and ord(i)<=90:
-                a=chr((((ord(i)-65)-shift)%26)+65)
+        if i.isalpha():
+            if low_first <= ord(i) <= low_last:
+                a = chr((((ord(i) - low_first) - shift) % eng_alp) + low_first)
                 plaintext += a
-            elif ord(i)>=97 and ord(i)<=122:
-                a=chr((((ord(i)-97)-shift)%26)+97)
+            elif high_first <= ord(i) <= high_last:
+                a = chr((((ord(i) - high_first) - shift) % eng_alp) + high_first)
                 plaintext += a
         else:
             plaintext += i
