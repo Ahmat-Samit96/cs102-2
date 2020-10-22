@@ -94,10 +94,10 @@ def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    for i in range(len(grid)):
-        for j in range(len(grid)):
-            if grid[i][j] == ".":
-                return (i, j)
+    for first in range(len(grid)):
+        for second in range(len(grid)):
+            if grid[first][second] == ".":
+                return (first, second)
 
 
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
@@ -111,7 +111,7 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     >>> values == {'2', '5', '9'}
     True
     """
-    pass
+    
 
 
 def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
