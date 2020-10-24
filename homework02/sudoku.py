@@ -164,8 +164,8 @@ def check_solution(solution: List[List[str]]) -> bool:
         if result != set("123456789"):
             return False
 
-    for row in (0, 3, 6):
-        for col in (0, 3, 6):
+    for row in range(0, (len(solution) - 1), 3):
+        for col in range(0, (len(solution) - 1), 3):
             result = set(get_block(solution, (row, col)))
             if result != set("123456789"):
                 return False
