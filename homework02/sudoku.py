@@ -16,7 +16,8 @@ def display(grid: List[List[str]]) -> None:
     for row in range(9):
         print(
             "".join(
-                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
+                for col in range(9)
             )
         )
         if str(row) in "25":
@@ -103,6 +104,7 @@ def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
         for second in range(len(grid)):
             if grid[first][second] == ".":
                 return (first, second)
+    return None
 
 
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
@@ -200,10 +202,14 @@ def generate_sudoku(N: int) -> List[List[str]]:
     while N:
         row = random.randint(0, 8)
         col = random.randint(0, 8)
-        if grid[row][col] != ".":
-            grid[row][col] = "."
-            N -= 1
-    return grid
+        if grid is not None:
+            if grid[row][col] != ".":
+                grid[row][col] = "."
+                N -= 1
+    if grid is not None:               
+        return grid
+    else:
+        return []
 
 
 if __name__ == "__main__":
