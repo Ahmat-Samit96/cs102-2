@@ -16,8 +16,7 @@ def display(grid: List[List[str]]) -> None:
     for row in range(9):
         print(
             "".join(
-                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
-                for col in range(9)
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
             )
         )
         if str(row) in "25":
@@ -206,7 +205,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
             if grid[row][col] != ".":
                 grid[row][col] = "."
                 N -= 1
-    if grid is not None:               
+    if grid is not None:
         return grid
     else:
         return []
