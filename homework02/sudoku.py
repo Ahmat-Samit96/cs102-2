@@ -148,7 +148,7 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
         if mean:
             return mean
     grid[row][col] = "."
-    return []
+    return None
 
 
 def check_solution(solution: List[List[str]]) -> bool:
@@ -205,10 +205,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
             if grid[row][col] != ".":
                 grid[row][col] = "."
                 N -= 1
-    if grid is not None:
-        return grid
-    else:
-        return []
+    return grid  # type: ignore
 
 
 if __name__ == "__main__":
