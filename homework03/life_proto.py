@@ -45,6 +45,7 @@ class GameOfLife:
 
         # Создание списка клеток
         # PUT YOUR CODE HERE
+        self.grid1 = self.create_grid
 
         running = True
         while running:
@@ -76,13 +77,28 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
-        pass
+
+        self.grid1 = []
+        if randomize == False:
+            self.grid1 = [[0 for j in range(self.cell_width)] for i in range(self.cell_height)]
+        else:
+            self.grid1 = [[random.randint(0, 1) for j in range(self.cell_width)] for i in range(self.cell_height)]
+        return self.grid1
+
 
     def draw_grid(self) -> None:
         """
         Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
         """
-        pass
+        
+        for i in range(self.cell_width):
+            for j in range(self.cell_height):
+                row = j * self.cell_size + 1
+                col = i * self.cell_size + 1
+                if grid1[i][j]:
+                    pygame.draw.rect(self.screen, pygame.Color("green"), (row, col))
+                else:
+                    pygame.draw.rect(self.screen, pygame.Color("white"), (row, col))
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
@@ -99,7 +115,13 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        pass
+        
+        row, col = cell
+        limit1 = self.cell_width - 1
+        limit2 = self.cell_height - 1
+        neighbours = (self.grid1[row][col] for i in range(row-1, row+2) for j in range(col-1, col+2) if 
+        (0 <= i <= limit1) and (0 <= j <= limit2) and (i != row or j != col))
+        return neighbours
 
     def get_next_generation(self) -> Grid:
         """
@@ -109,4 +131,14 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        pass
+        
+        deepcopy = copy.deepcopy(self.grid1)
+        for i in range(self.width):
+            for j in range(self.height):
+                neighbours = sum(self.get_neighbours(i, j))
+                if self.grid1[i][j]:
+                    if 1 < neighbours < 4:
+                        deepcopy[i][j] = 1
+                    else:
+                        deepcopy[i][j] = 0
+        return deepcopy
