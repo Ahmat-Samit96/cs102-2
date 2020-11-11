@@ -96,11 +96,23 @@ class GameOfLife:
         Прочитать состояние клеток из указанного файла.
         """
 
-        pass
+        doc = open(filename, "r")
+        doc_grid = [[int(col) for col in row.strip()] for row in doc ]
+        doc.close()
 
-    def save(filename: pathlib.Path) -> None:
+        game = GameOfLife((len(doc_grid), len(doc_grid[0])))
+        game.curr_generation = doc_grid
+        return game
+    
+
+    def save(self, filename: pathlib.Path) -> None:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
         
-        pass
+        doc = open(filename, "w")
+        for row in self.curr_generation:
+            for col in row:
+                doc.write(str(col))
+            doc.write("\n")
+        doc.close()
