@@ -15,7 +15,7 @@ class GUI(UI):
         )
 
     def draw_lines(self) -> None:
-        
+
         width = self.life.cols * self.cell_size
         height = self.life.rows * self.cell_size
         for x in range(0, width, self.cell_size):
@@ -32,7 +32,11 @@ class GUI(UI):
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
-                pygame.draw.rect(self.life.screen, color, (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght))
+                pygame.draw.rect(
+                    self.life.screen,
+                    color,
+                    (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght),
+                )
 
     def run(self) -> None:
 
@@ -49,7 +53,7 @@ class GUI(UI):
                     running = False
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     pause = True
-            
+
             self.draw_lines()
 
             if pause:
@@ -74,4 +78,4 @@ class GUI(UI):
                 self.draw_grid()
                 pygame.display.flip()
                 clock.tick(self.speed)
-        pygame.quit()       
+        pygame.quit()
