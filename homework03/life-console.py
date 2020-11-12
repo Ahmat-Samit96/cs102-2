@@ -13,25 +13,25 @@ class Console(UI):
 
         screen.clear()
         y, x = screen.getmaxyx()
-        string = ""
+        doc = ""
 
         for row in range(y):
             for col in range(x):
                 if row == 0 or row == (y - 1):
                     if col == 0 or col == x:
-                        string += "*"
+                        doc += "*"
                     else:
-                        string += "-"
+                        doc += "-"
                 elif row < (y - 1) and row > 0:
                     if col == 0 or col == (x - 1):
-                        string += "|"
+                        doc += "|"
                     else:
-                        string += " "
+                        doc += " "
             try:
-                screen.addstr(string)
+                screen.addstr(doc)
             except curses.error:
                 pass
-            string = ""
+            doc = ""
 
         self.draw_grid(screen)
         screen.refresh()
