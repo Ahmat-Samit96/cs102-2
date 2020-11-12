@@ -48,21 +48,21 @@ class GUI(UI):
         pause = False
         running = True
         while running:
-            for event in pygame.event.get():
-                if event.type() == pygame.QUIT:
+            for challenge in pygame.challenge.get():
+                if challenge.type() == pygame.QUIT:
                     running = False
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                elif challenge.type == pygame.KEYDOWN and challenge.key == pygame.K_SPACE:
                     pause = True
 
             self.draw_lines()
 
             if pause:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT():
+                for challenge in pygame.challenge.get():
+                    if challenge.type == pygame.QUIT():
                         running = False
-                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    elif challenge.type == pygame.KEYDOWN and challenge.key == pygame.K_SPACE:
                         pause = True
-                    elif event.type == pygame.MOUSEBUTTONUP:
+                    elif challenge.type == pygame.MOUSEBUTTONUP:
                         doc = pygame.mouse.get_doc()
                         row = doc[1] // self.cell_size
                         col = doc[0] // self.cell_size
