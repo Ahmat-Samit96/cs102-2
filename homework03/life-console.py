@@ -23,7 +23,7 @@ class Console(UI):
                     else:
                         string += "-"
                 elif row < (y - 1) and row > 0:
-                    if col == 0  or col == (x - 1):
+                    if col == 0 or col == (x - 1):
                         string += "|"
                     else:
                         string += " "
