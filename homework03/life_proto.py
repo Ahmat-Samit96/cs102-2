@@ -83,15 +83,17 @@ class GameOfLife:
         if randomize == False:
             grid = [[0 for j in range(self.cell_width)] for i in range(self.cell_height)]
         else:
-            grid = [[random.randint(0, 1) for j in range(self.cell_width)] for i in range(self.cell_height)]
+            grid = [
+                [random.randint(0, 1) for j in range(self.cell_width)]
+                for i in range(self.cell_height)
+            ]
         return grid
-
 
     def draw_grid(self) -> None:
         """
         Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
         """
-        
+
         lenght = self.cell_size - 1
         for i in range(self.cell_height):
             for j in range(self.cell_width):
@@ -99,7 +101,11 @@ class GameOfLife:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
-                pygame.draw.rect(self.screen, color, (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght))
+                pygame.draw.rect(
+                    self.screen,
+                    color,
+                    (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght),
+                )
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
@@ -116,12 +122,16 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        
+
         neighbours = []
         row, col = cell
-        for i in range(-1,2):
+        for i in range(-1, 2):
             for j in range(-1, 2):
-                if 0 <= row + i < self.cell_height and 0 <= col + j < self.cell_width and (i, j) != (0, 0):
+                if (
+                    0 <= row + i < self.cell_height
+                    and 0 <= col + j < self.cell_width
+                    and (i, j) != (0, 0)
+                ):
                     neighbours.append(self.grid[row + i][col + j])
         return neighbours
 
@@ -133,7 +143,7 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        
+
         copy_grid = self.create_grid(False)
         for i in range(self.cell_height):
             for j in range(self.cell_width):
