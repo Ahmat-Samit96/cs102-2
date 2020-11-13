@@ -26,14 +26,14 @@ class GUI(UI):
     def draw_grid(self) -> None:
 
         lenght = self.cell_size - 1
-        for i in range(self.life.cell_rows):
-            for j in range(self.life.cell_cols):
+        for i in range(self.life.rows):
+            for j in range(self.life.cols):
                 if self.life.curr_generation == 1:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
                 pygame.draw.rect(
-                    self.life.screen,
+                    self.screen,
                     color,
                     (i * self.cell_size + 1, j * self.cell_size + 1, lenght, lenght),
                 )
@@ -63,7 +63,7 @@ class GUI(UI):
                     elif challenge.type == pygame.KEYDOWN and challenge.key == pygame.K_SPACE:
                         pause = True
                     elif challenge.type == pygame.MOUSEBUTTONUP:
-                        doc = pygame.mouse.get_doc()
+                        doc = challenge.pos
                         row = doc[1] // self.cell_size
                         col = doc[0] // self.cell_size
                         if self.life.curr_generation[row][col]:
