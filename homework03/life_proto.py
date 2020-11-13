@@ -50,7 +50,7 @@ class GameOfLife:
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
             self.draw_lines()
 
@@ -147,14 +147,9 @@ class GameOfLife:
         copy_grid = self.create_grid(False)
         for i in range(self.cell_height):
             for j in range(self.cell_width):
-                if (self.grid[i][j] == 0) and sum(self.get_neighbours([i, j])) == 3:
+                if (self.grid[i][j] == 0) and sum(self.get_neighbours((i, j))) == 3:
                     copy_grid[i][j] = 1
-                elif (self.grid[i][j] == 1) and (1 < sum(self.get_neighbours([i, j])) < 4):
+                elif (self.grid[i][j] == 1) and (1 < sum(self.get_neighbours((i, j))) < 4):
                     copy_grid[i][j] = 1
 
         return copy_grid
-
-
-if __name__ == "__main__":
-    game = GameOfLife(1080, 880, 40)
-    game.run()
