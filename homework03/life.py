@@ -52,10 +52,10 @@ class GameOfLife:
         copy_grid = self.create_grid(False)
         for i in range(self.cols):
             for j in range(self.rows):
-                if (self.curr_generation[i][j] == 0) and sum(self.get_neighbours([i, j])) == 3:
+                if (self.curr_generation[i][j] == 0) and sum(self.get_neighbours((i, j))) == 3:
                     copy_grid[i][j] = 1
                 elif (self.curr_generation[i][j] == 1) and (
-                    1 < sum(self.get_neighbours([i, j])) < 4
+                    1 < sum(self.get_neighbours((i, j))) < 4
                 ):
                     copy_grid[i][j] = 1
 
@@ -67,7 +67,7 @@ class GameOfLife:
         """
 
         self.prev_generation = copy.deepcopy(self.curr_generation)
-        self.curr_generation = self.get_next_generation
+        self.curr_generation = self.get_next_generation()
         self.generations += 1
 
     @property
@@ -75,7 +75,7 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        if self.generations <= self.max_generations:
+        if self.generations == self.max_generations:
             return True
         else:
             return False
@@ -86,10 +86,10 @@ class GameOfLife:
         Изменилось ли состояние клеток с предыдущего шага.
         """
 
-        if self.prev_generation == self.curr_generation:
-            return False
-        else:
+        if self.prev_generation != self.curr_generation:
             return True
+        else:
+            return False
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
