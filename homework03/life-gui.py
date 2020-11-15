@@ -28,7 +28,7 @@ class GUI(UI):
         lenght = self.cell_size - 1
         for i in range(self.life.rows):
             for j in range(self.life.cols):
-                if self.life.curr_generation == 1:
+                if self.life.curr_generation[i][j] == 1:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
@@ -48,22 +48,22 @@ class GUI(UI):
         pause = False
         running = True
         while running:
-            for challenge in pygame.challenge.get():
-                if challenge.type() == pygame.QUIT:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     running = False
-                elif challenge.type == pygame.KEYDOWN and challenge.key == pygame.K_SPACE:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     pause = True
 
             self.draw_lines()
 
             if pause:
-                for challenge in pygame.challenge.get():
-                    if challenge.type == pygame.QUIT():
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         running = False
-                    elif challenge.type == pygame.KEYDOWN and challenge.key == pygame.K_SPACE:
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                         pause = True
-                    elif challenge.type == pygame.MOUSEBUTTONUP:
-                        doc = challenge.pos
+                    elif event.type == pygame.MOUSEBUTTONUP:
+                        doc = event.pos
                         row = doc[1] // self.cell_size
                         col = doc[0] // self.cell_size
                         if self.life.curr_generation[row][col]:
@@ -79,3 +79,9 @@ class GUI(UI):
                 pygame.display.flip()
                 clock.tick(self.speed)
         pygame.quit()
+
+
+if __name__ == "__main__":
+    life = GameOfLife((20, 20), max_generations=500)
+    gui = GUI(life)
+    gui.run()
