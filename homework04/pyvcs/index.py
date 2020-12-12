@@ -45,11 +45,21 @@ class GitIndexEntry(tp.NamedTuple):
     @staticmethod
     def unpack(data: bytes) -> "GitIndexEntry":
         index_unpacked_content = struct.unpack(">10I20sh" + str(len(data) - 62) + "s", data)
-        return GitIndexEntry(index_unpacked_content[0], index_unpacked_content[1], index_unpacked_content[2],
-                             index_unpacked_content[3], index_unpacked_content[4], index_unpacked_content[5],
-                             index_unpacked_content[6], index_unpacked_content[7], index_unpacked_content[8],
-                             index_unpacked_content[9], index_unpacked_content[10], index_unpacked_content[11],
-                             index_unpacked_content[12].rstrip(b"\00").decode())
+        return GitIndexEntry(
+            index_unpacked_content[0],
+            index_unpacked_content[1],
+            index_unpacked_content[2],
+            index_unpacked_content[3],
+            index_unpacked_content[4],
+            index_unpacked_content[5],
+            index_unpacked_content[6],
+            index_unpacked_content[7],
+            index_unpacked_content[8],
+            index_unpacked_content[9],
+            index_unpacked_content[10],
+            index_unpacked_content[11],
+            index_unpacked_content[12].rstrip(b"\00").decode(),
+        )
 
 
 def read_index(gitdir: pathlib.Path) -> tp.List[GitIndexEntry]:
@@ -70,7 +80,7 @@ def read_index(gitdir: pathlib.Path) -> tp.List[GitIndexEntry]:
                 break
         result += [GitIndexEntry.unpack(main_content_copy[: end_of_entry + 1])]
         if len(main_content_copy) > end_of_entry:
-            main_content_copy = main_content_copy[end_of_entry + 1:]
+            main_content_copy = main_content_copy[end_of_entry + 1 :]
     return result
 
 

@@ -29,11 +29,7 @@ def write_tree(gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str
                 (
                     0o40000,
                     str(gitdir.parent / dirname / name),
-                    bytes.fromhex(
-                        write_tree(
-                            gitdir, subtrees[name], dirname + "/" + name
-                        )
-                    ),
+                    bytes.fromhex(write_tree(gitdir, subtrees[name], dirname + "/" + name)),
                 )
             )
         else:
@@ -41,11 +37,7 @@ def write_tree(gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str
                 (
                     0o40000,
                     str(gitdir.parent / dirname / name),
-                    bytes.fromhex(
-                        write_tree(
-                            gitdir, subtrees[name], name
-                        )
-                    ),
+                    bytes.fromhex(write_tree(gitdir, subtrees[name], name)),
                 )
             )
     tree_content.sort(key=lambda x: x[1])

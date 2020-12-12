@@ -28,7 +28,7 @@ def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
-    if get_ref(gitdir) == '':
+    if get_ref(gitdir) == "":
         return True
     return False
 
@@ -36,7 +36,7 @@ def is_detached(gitdir: pathlib.Path) -> bool:
 def get_ref(gitdir: pathlib.Path) -> str:
     with (gitdir / "HEAD").open() as f:
         data = f.read().strip().split()
-        if len(data)==2:
+        if len(data) == 2:
             return data[1]
         else:
-            return ''
+            return ""
