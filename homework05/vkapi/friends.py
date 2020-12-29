@@ -17,7 +17,7 @@ class FriendsResponse:
 
 
 def get_friends(
-        user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -29,15 +29,10 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    params = {
-        "user_id": user_id,
-        "count": count,
-        "offset": offset,
-        "fields": fields
-    }
+    params = {"user_id": user_id, "count": count, "offset": offset, "fields": fields}
     response = session.get("/friends.get", params=params)
     if response.status_code != 200:
-        raise APIError(response.json()['error']['error_msg'])
+        raise APIError(response.json()["error"]["error_msg"])
     return FriendsResponse(**response.json()["response"])
 
 
@@ -48,13 +43,13 @@ class MutualFriends(tp.TypedDict):
 
 
 def get_mutual(
-        source_uid: tp.Optional[int] = None,
-        target_uid: tp.Optional[int] = None,
-        target_uids: tp.Optional[tp.List[int]] = None,
-        order: str = "",
-        count: tp.Optional[int] = None,
-        offset: int = 0,
-        progress=None,
+    source_uid: tp.Optional[int] = None,
+    target_uid: tp.Optional[int] = None,
+    target_uids: tp.Optional[tp.List[int]] = None,
+    order: str = "",
+    count: tp.Optional[int] = None,
+    offset: int = 0,
+    progress=None,
 ) -> tp.Union[tp.List[int], tp.List[MutualFriends]]:
     """
     Получить список идентификаторов общих друзей между парой пользователей.
