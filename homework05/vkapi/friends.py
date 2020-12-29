@@ -33,12 +33,12 @@ def get_friends(
         "user_id": user_id,
         "count": count,
         "offset": offset,
-        "fields": ','.join(fields)
+        "fields": fields
     }
     response = session.get("/friends.get", params=params)
     if response.status_code != 200:
         raise APIError(response.json()['error']['error_msg'])
-    return FriendsResponse(**response["response"].json())
+    return FriendsResponse(**response.json()["response"])
 
 
 class MutualFriends(tp.TypedDict):
@@ -92,8 +92,8 @@ def get_mutual(
             raise APIError
         offset += 100
 
-        if isinstance(response["response"], list):
-            responses.extend(response["response"])
+        if isinstance(response.json()["response"], list):
+            responses.extend(response.json()["response"])
         else:
             response.append(
                 MutualFriends(
