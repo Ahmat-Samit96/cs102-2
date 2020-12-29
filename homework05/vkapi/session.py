@@ -47,7 +47,7 @@ class Session:
         )
         self.session = requests.Session()
 
-        adapter = TimeoutHTTPAdapter(timeout=timeout, max_retries=retry)
+        adapter = HTTPAdapter(max_retries=retry)
         self.session.mount(self.base_url, adapter)
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
