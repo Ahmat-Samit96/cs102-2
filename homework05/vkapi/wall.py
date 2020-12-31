@@ -22,7 +22,7 @@ def get_posts_2500(
     extended: int = 0,
     fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
-    script = f"""
+    code = f"""
                 var i = 0; 
                 var result = [];
                 while i < {max_count} {{
@@ -44,7 +44,7 @@ def get_posts_2500(
                     i = i + {count}
                 }}return ;
             """
-    data = {"code": script}
+    data = {"code": code}
     response = session.post("/execute", data=data).json()["response"]
     return response["items"]
 
@@ -75,15 +75,32 @@ def get_wall_execute(
     :param fields: Список дополнительных полей для профилей и сообществ, которые необходимо вернуть.
     :param progress: Callback для отображения прогресса.
     """
-    df = pd.DataFrame()
+    date_f = pd.DataFrame()
+    code = f"""
+            return API.wall.get({{
+            "owner_id": "{owner_id}",
+            "domain": "{domain}",
+            "offset": "0",
+            "count": "1",
+            "filter": "{filter}",
+            "extended": "0",
+            "fields": "",
+}});
+"""
+
+    data = {"code": code}
+    response = session.post("/execute", data=data).json()
+    if "error" in response:
+        raise APIError(response["error"]["error_msg"])
     if progress is None:
         progress = lambda x: x
-
-    for _ in progress(range(math.ceil(count / 2500))):
-        df = df.append(
+    for _ in progress(
+        range(0, math.ceil((response["response"]["count"] if count == 0 else count) / max_count))
+    ):
+        date_f = date_f.append(
             json_normalize(
                 get_posts_2500(owner_id, domain, offset, count, max_count, filter, extended, fields)
             )
         )
         time.sleep(1)
-    return df
+    return date_f
