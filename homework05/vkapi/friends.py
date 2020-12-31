@@ -90,11 +90,11 @@ def get_mutual(
         if isinstance(response.json()["response"], list):
             responses.extend(response.json()["response"])
         else:
-            response.append(
+            response.append(  # type: ignore
                 MutualFriends(
-                    id=response["response"]["id"],
-                    common_friends=response["response"]["common_friends"],
-                    common_count=response["response"]["common_count"],
+                    id=response["response"]["id"],  # type: ignore
+                    common_friends=response["response"]["common_friends"],  # type: ignore
+                    common_count=response["response"]["common_count"],  # type: ignore
                 )
             )
         time.sleep(1)
