@@ -22,7 +22,7 @@ class TimeoutHTTPAdapter(HTTPAdapter):
         return super().send(request, **kwargs)
 
 
-class Session:
+class Session(requests.Session):
     """
     Сессия.
 
@@ -39,31 +39,21 @@ class Session:
         max_retries: int = 3,
         backoff_factor: float = 0.3,
     ) -> None:
+        super().__init__()
         self.base_url = base_url
 
         retry = Retry(
             total=max_retries,
-            status_forcelist=[500, 503],
+            status_forcelist=[429, 500, 502, 503, 504],
             backoff_factor=backoff_factor,
+            method_whitelist=["HEAD", "GET", "OPTIONS", "POST"],
         )
-        self.session = requests.Session()
 
-        adapter = HTTPAdapter(max_retries=retry)
-        self.session.mount(self.base_url, adapter)
+        adapter = TimeoutHTTPAdapter(timeout=timeout, max_retries=retry)
+        self.mount(self.base_url, adapter)
 
-    def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        return self.send("GET", self.base_url + url, *args, **kwargs)
+    def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type:ignore
+        return super().get(self.base_url + "/" + url, *args, **kwargs)
 
-    def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        return self.send("POST", self.base_url + url, *args, **kwargs)
-
-    def send(self, method: str, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        if "params" not in kwargs:
-            kwargs["params"] = dict()
-
-        kwargs["params"]["access_token"] = VK_CONFIG["access_token"]
-        kwargs["params"]["v"] = VK_CONFIG["version"]
-
-        req = requests.Request(method, url, *args, **kwargs)
-        prepared = req.prepare()
-        return self.session.send(prepared)
+    def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:  # type:ignore
+        return super().post(self.base_url + "/" + url, *args, **kwargs)
