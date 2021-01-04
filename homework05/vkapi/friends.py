@@ -41,10 +41,10 @@ def get_friends(
         "offset": offset,
     }
     response = session.get("friends.get", params=params)
-    filee = response.json()
-    if "error" in filee or not response.ok:
-        raise APIError(filee["error"]["error_msg"])
-    return FriendsResponse(**filee["response"])
+    document = response.json()
+    if "error" in document or not response.ok:
+        raise APIError(document["error"]["error_msg"])
+    return FriendsResponse(**document["response"])
 
 
 class MutualFriends(tp.TypedDict):
@@ -82,10 +82,10 @@ def get_mutual(
             "order": order,
         }
         response = session.get(f"friends.getMutual", params=params)
-        filee = response.json()
-        if "error" in filee or not response.ok:
-            raise APIError(filee["error"]["error_msg"])
-        return filee["response"]
+        document = response.json()
+        if "error" in document or not response.ok:
+            raise APIError(document["error"]["error_msg"])
+        return document["response"]
 
     responses = []
     if progress is None:
@@ -100,10 +100,10 @@ def get_mutual(
             "offset": offset + i * 100,
         }
         response = session.get(f"friends.getMutual", params=params)
-        filee = response.json()
-        if "error" in filee or not response.ok:
-            raise APIError(filee["error"]["error_msg"])
-        for arg in filee["response"]:
+        document = response.json()
+        if "error" in document or not response.ok:
+            raise APIError(document["error"]["error_msg"])
+        for arg in document["response"]:
             responses.append(
                 MutualFriends(
                     id=arg["id"],
