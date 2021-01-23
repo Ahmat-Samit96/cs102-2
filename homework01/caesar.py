@@ -75,13 +75,10 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     for word in grid:
         for key in dictionary:
             for shift in range(26):
-                plaintext = decrypt_caesar(key, shift)
-                if word == plaintext:
+                plaintext = decrypt_caesar(word, shift)
+                if key == plaintext:
                     lst.append(shift)
     for i in range(26):
         if best_shift < lst.count(i):
-            best_shift = 26 - i
-        if best_shift == 26:
-            best_shift = 0
+            best_shift = i
     return best_shift
-    
