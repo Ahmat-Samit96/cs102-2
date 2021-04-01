@@ -13,7 +13,7 @@ engine = create_engine(path_news_db, connect_args={"check_same_thread": False})
 local_session = sessionmaker(autocommit=False, autoflush=False)
 
 
-class News(Base): #type: ignore
+class News(Base):  # type: ignore
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
     title = Column(String)

@@ -1,5 +1,5 @@
 import string
-from bottle import route, run, template, request, redirect #type: ignore
+from bottle import route, run, template, request, redirect  # type: ignore
 from sqlalchemy.orm import session
 import typing as tp
 
