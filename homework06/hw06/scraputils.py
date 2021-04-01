@@ -1,7 +1,7 @@
 from re import sub
 import requests
 import typing as tp
-from bs4 import BeautifulSoup  # type: ignore
+from bs4 import BeautifulSoup
 
 
 def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
