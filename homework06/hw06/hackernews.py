@@ -1,9 +1,12 @@
+import re
 import string
 from bottle import route, run, template, request, redirect
 from sqlalchemy.orm import session
 import typing as tp
 
-from hw06.database import News, get_session, engine, change_label, next_news
+from sqlalchemy.sql.expression import label
+
+from hw06.database import News, get_session, engine, change_label, get_new_news
 from hw06.bayes import NaiveBayesClassifier
 
 
@@ -20,10 +23,9 @@ def news_list():
 @route("/add_label/")
 def add_label():
     s = get_session(engine)
-    http_request = request.query_string
-    label, id = http_request.split("&")
-    label, id = label.split("=")[1], int(id.split("=")[1])
-    change_label(s, [label, id])
+    id = request.query["id"]
+    label = request.query["label"]
+    change_label(s, id, label)
     redirect("/news")
 
 
@@ -31,7 +33,7 @@ def add_label():
 @route("/update")
 def update_news():
     s = get_session(engine)
-    next_news(s)
+    get_new_news(s)
     redirect("/news")
 
 

@@ -38,7 +38,7 @@ def session(engine):
 
 
 def test_news_can_be_saved(session):
-    database.table_news(session=session, news=test_news)
+    database.make_table_news(session=session, news=test_news)
 
     saved_item = session.query(database.News).get(1)
     assert saved_item.title == test_news[0]["title"]
@@ -50,12 +50,12 @@ def test_news_can_be_saved(session):
 
 
 def test_can_news_be_labeled(session):
-    database.table_news(session=session, news=test_news)
+    database.make_table_news(session=session, news=test_news)
 
     saved_item = session.query(database.News).get(1)
     assert saved_item.label is None
 
     label = "good"
-    database.change_label(session=session, data=[label, 1])
+    database.change_label(session=session, id=1, label=label)
     saved_item = session.query(database.News).get(1)
     assert saved_item.label == label

@@ -4,7 +4,7 @@ import typing as tp
 from bs4 import BeautifulSoup
 
 
-def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
+def extract_news(parser: BeautifulSoup, url: str = "https://news.ycombinator.com/" ) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
     """ Extract news from a given web page """
 
     news_list = []
@@ -21,7 +21,7 @@ def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, st
         title_list.append(i.text)
         link = i.get("href", None)
         if link.startswith("item"):
-            links_list.append("https://news.ycombinator.com/" + link)
+            links_list.append(url + link)
         else:
             links_list.append(link)
 

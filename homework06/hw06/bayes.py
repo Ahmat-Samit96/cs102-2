@@ -26,7 +26,7 @@ class NaiveBayesClassifier:
 
         self.d = len(self.words_counter)
 
-    def formula(self, cls: str, word: str) -> float:
+    def log_wi_c(self, cls: str, word: str) -> float:
         """Calculate log of probability of P(Wi|C)"""
         return log(
             (self.classified_words[word, cls] + self.a)
@@ -35,7 +35,7 @@ class NaiveBayesClassifier:
 
     def class_probability(self, cls: str, feature: str) -> float:
         """Calculate log of probability"""
-        return log(self.classes[cls]) + sum(self.formula(cls, w) for w in feature.split())
+        return log(self.classes[cls]) + sum(self.log_wi_c(cls, w) for w in feature.split())
 
     def predict(self, feature: str) -> str:
         """ Perform classification for one feature. """
@@ -50,25 +50,3 @@ class NaiveBayesClassifier:
         """ Returns the mean accuracy on the given test data and labels. """
         predicted = self.get_predictions(X)
         return mean(pred == actual for pred, actual in zip(predicted, y))
-
-
-if __name__ == "__main__":
-    import csv
-    import string
-
-    with open("SMSSpamCollection") as f:
-        data = list(csv.reader(f, delimiter="\t"))
-    print(len(data))
-
-    def clean(s: str) -> str:
-        translator = str.maketrans("", "", string.punctuation)
-        return s.translate(translator)
-
-    X, y = [], []
-
-    for target, msg in data:
-        X.append(msg)
-        y.append(target)
-
-    X = [clean(x).lower() for x in X]
-    X_train, y_train, X_test, y_test = X[:3900], y[:3900], X[3900:], y[3900:]
