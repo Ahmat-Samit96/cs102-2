@@ -42,7 +42,7 @@ def make_table_news(session: Session, news: tp.List[tp.Dict[str, tp.Union[int, s
 
 
 @tp.no_type_check
-def change_label(session: Session, id: int , label: str) -> None:
+def change_label(session: Session, id: int, label: str) -> None:
     item = session.query(News).get(id)
     item.label = label
     session.commit()
@@ -61,4 +61,6 @@ def get_new_news(session: Session, url: str = "https://news.ycombinator.com/newe
 Base.metadata.create_all(bind=engine)
 
 if __name__ == "__main__":
-    make_table_news(get_session(engine), get_news(url="https://news.ycombinator.com/newest", n_pages=4))
+    make_table_news(
+        get_session(engine), get_news(url="https://news.ycombinator.com/newest", n_pages=4)
+    )
