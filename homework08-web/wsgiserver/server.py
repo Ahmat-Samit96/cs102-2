@@ -8,9 +8,7 @@ from .response import WSGIResponse
 
 # set up logging
 logging.basicConfig(
-    level=logging.INFO,
-    filename="agent.log",
-    format="%(asctime)s %(levelname)s: %(message)s"
+    level=logging.INFO, filename="agent.log", format="%(asctime)s %(levelname)s: %(message)s"
 )
 
 
