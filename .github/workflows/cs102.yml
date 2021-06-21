@@ -20,7 +20,7 @@ jobs:
         black -l 100 --check --diff --color --exclude "test*" homework09-web
     - name: Run mypy
       run: |
-        mypy --ignore-missing-imports --install-types  homework09-web
+        mypy --ignore-missing homework09-web
     - name: Run pylint
       run: |
         pylint --exit-zero homework09-web
