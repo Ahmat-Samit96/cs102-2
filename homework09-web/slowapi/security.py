@@ -27,7 +27,7 @@ class Security:
         }
         return jwt.encode(payload, self.secret, self.algorithm)
 
-    def check(self, token):
+    def check_jwt(self, token):
         try:
             payload = jwt.decode(token, self.secret, self.algorithm)
             email = payload.get("email")
@@ -44,7 +44,7 @@ class Security:
                 bearer = request.headers.get("authorization", "").split(" ")
                 if bearer[0] != "Bearer":
                     return self.error
-                if not self.check(bearer[1]):
+                if not self.check_jwt(bearer[1]):
                     return self.error
                 return func(request, *args, **kwargs)
 
